@@ -26,8 +26,6 @@ class FirstFragment : Fragment() {
     private var param2: String? = null
     private lateinit var mainActivity: MainActivity
     private lateinit var binding: FragmentFirstBinding
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainActivity= activity as MainActivity
