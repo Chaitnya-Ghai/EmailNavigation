@@ -33,7 +33,6 @@ class ThirdFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,12 +42,8 @@ class ThirdFragment : Fragment() {
         return binding.root
 //        return inflater.inflate(R.layout.fragment_third, container, false)
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
         binding.confirmBtnF3.setOnClickListener {
             if (binding.etNewPass.text.isNullOrEmpty()){
                 binding.etNewPass.error="Enter Password"
@@ -68,7 +63,6 @@ class ThirdFragment : Fragment() {
                     findNavController().navigate(R.id.action_thirdFragment_to_forthFragment)
             }
         }
-
     }
     companion object {
         /**
