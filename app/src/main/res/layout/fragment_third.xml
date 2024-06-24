@@ -13,16 +13,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:text="@string/setPass"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etNewPass"
+        android:inputType="textVisiblePassword"
         android:hint="@string/newPass"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etConfirmNewPass"
+        android:inputType="textVisiblePassword"
+
         android:hint="@string/confirmNewPass"/>
     <Button
         android:layout_width="wrap_content"
