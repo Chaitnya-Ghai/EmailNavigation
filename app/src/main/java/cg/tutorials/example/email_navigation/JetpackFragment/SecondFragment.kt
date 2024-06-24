@@ -2,10 +2,12 @@ package cg.tutorials.example.email_navigation.JetpackFragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -77,6 +79,10 @@ binding.tvEmail.setText(email)
                 binding.otpEt4.requestFocus()
             }
         }
+        setupEditTextNavigation(binding.otpEt1, binding.otpEt2, null)
+        setupEditTextNavigation(binding.otpEt2, binding.otpEt3, binding.otpEt1)
+        setupEditTextNavigation(binding.otpEt3, binding.otpEt4, binding.otpEt2)
+        setupEditTextNavigation(binding.otpEt4, null, binding.otpEt3)
 
         binding.checkBtn.setOnClickListener {
             if (binding.otpEt1.text.toString() == otp!![0].toString() &&
@@ -97,6 +103,22 @@ binding.tvEmail.setText(email)
                 Toast.makeText(requireContext(), "otp missMatch", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun setupEditTextNavigation( currentEditText: EditText,
+                                         nextEditText: EditText?,
+                                         previousEditText: EditText?
+    ) {
+        currentEditText.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                if (keyCode == KeyEvent.KEYCODE_DEL && event?.action == KeyEvent.ACTION_DOWN && currentEditText.text.isEmpty()) {
+                    previousEditText?.requestFocus()
+                    previousEditText?.setSelection(previousEditText.text.length)
+                    return true
+                }
+                return false
+            }
+        })
     }
 
     companion object {
