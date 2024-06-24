@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+    implementation("com.airbnb.android:lottie:3.4.0")
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment)
     testImplementation(libs.junit)

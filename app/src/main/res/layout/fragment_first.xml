@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:id="@+id/etFragment"
+            android:inputType="textEmailAddress"
             android:hint="@string/enter_your_email"/>
         <Button
             android:layout_width="wrap_content"
