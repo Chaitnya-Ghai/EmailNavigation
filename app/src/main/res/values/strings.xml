@@ -11,5 +11,5 @@
     <string name="newPass">Enter New Password</string>
     <string name="confirmNewPass">Confirm New Password</string>
     <string name="confirm">Confirm</string>
-    <string name="move_back">back to 1st fragment</string>
+    <string name="move_back">move back btn to go 1st fragment</string>
 </resources>
