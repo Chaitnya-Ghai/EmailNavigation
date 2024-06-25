@@ -2,12 +2,10 @@ package cg.tutorials.example.email_navigation.JetpackFragment
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
@@ -28,15 +26,15 @@ class SecondFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-   private var email:String?=null
-   private var otp :String?=null
-private lateinit var binding: FragmentSecondBinding
+    private var email: String? = null
+    private var otp: String? = null
+    private lateinit var binding: FragmentSecondBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            email = it.getString("email")?:""
-            otp = it.getString("otp")?:""
+            email = it.getString("email") ?: ""
+            otp = it.getString("otp") ?: ""
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
@@ -47,79 +45,78 @@ private lateinit var binding: FragmentSecondBinding
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding =FragmentSecondBinding.inflate(layoutInflater)
+        binding = FragmentSecondBinding.inflate(layoutInflater)
         return binding.root
 //        return inflater.inflate(R.layout.fragment_second, container, false)
     }
 
+
+    private fun emailWithNo(email:String,num:String): String {
+        val atIndex = email.indexOf('@')
+        return if (atIndex != -1) {
+            val localPart = email.substring(0, atIndex)
+            val domainPart = email.substring(atIndex)
+            "$localPart$num$domainPart"
+        } else {
+            return email
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-binding.tvEmail.setText(email)
-        binding.otpEt1.doOnTextChanged { _, _, _, _ ->
-            val enteredText = binding.otpEt1.text.toString()
-            if (enteredText.length==1){
-                binding.otpEt2.requestFocus()
+        binding.tvEmail.text= emailWithNo(email.toString(),otp.toString())
+        binding.apply {
+            otpEt1.doOnTextChanged {  _, _, _, _ ->
+                val enteredText = otpEt1.text.toString()
+                if (enteredText.isNotEmpty()) {
+                    otpEt2.requestFocus()
+                }
+            }
+            otpEt2.doOnTextChanged {  text, _, _, _ ->
+                if (!text.isNullOrBlank()) {
+                   otpEt3.requestFocus()
+                }
+                else {
+                    otpEt1.requestFocus()
+                }
+            }
+            otpEt3.doOnTextChanged {  text, _, _, _ ->
+                if (!text.isNullOrBlank()) {
+                    otpEt4.requestFocus()
+                }
+                else {
+                   otpEt2.requestFocus()
+                }
+            }
+           otpEt4.doOnTextChanged {  text, _, _, _ ->
+                if (!text.isNullOrBlank()) {
+                    checkBtn.requestFocus()
+                }
+                else {
+                    otpEt3.requestFocus()
+                }
             }
         }
-        binding.otpEt2.doOnTextChanged { _, _, _, _ ->
-            val enteredText = binding.otpEt2.text.toString()
-            if (enteredText.length==1){
-                binding.otpEt3.requestFocus()
-            }
-        }
-        binding.otpEt3.doOnTextChanged { _, _, _, _ ->
-            val enteredText = binding.otpEt3.text.toString()
-            if (enteredText.length==1){
-                binding.otpEt4.requestFocus()
-            }
-        }
-        binding.otpEt4.doOnTextChanged { _, _, _, _ ->
-            val enteredText = binding.otpEt4.text.toString()
-            if (enteredText.length==1){
-                binding.otpEt4.requestFocus()
-            }
-        }
-        setupEditTextNavigation(binding.otpEt1, binding.otpEt2, null)
-        setupEditTextNavigation(binding.otpEt2, binding.otpEt3, binding.otpEt1)
-        setupEditTextNavigation(binding.otpEt3, binding.otpEt4, binding.otpEt2)
-        setupEditTextNavigation(binding.otpEt4, null, binding.otpEt3)
-
         binding.checkBtn.setOnClickListener {
             if (binding.otpEt1.text.toString() == otp!![0].toString() &&
-                (binding.otpEt2.text.toString() == otp!![1].toString())&&
-                (binding.otpEt3.text.toString() == otp!![2].toString())&&
+                (binding.otpEt2.text.toString() == otp!![1].toString()) &&
+                (binding.otpEt3.text.toString() == otp!![2].toString()) &&
                 (binding.otpEt4.text.toString() == otp!![3].toString())
-                ) {
+            ) {
                 findNavController().navigate(R.id.action_secondFragment_to_thirdFragment)
-            }
-            else{
+            } else {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("Invalid Otp")
                     setCancelable(false)
-                    setPositiveButton("OK"){_,_ ->
+                    setPositiveButton("OK") { _, _ ->
                         setCancelable(true)
                     }
-                show()}
+                    show()
+                }
                 Toast.makeText(requireContext(), "otp missMatch", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun setupEditTextNavigation( currentEditText: EditText,
-                                         nextEditText: EditText?,
-                                         previousEditText: EditText?
-    ) {
-        currentEditText.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                if (keyCode == KeyEvent.KEYCODE_DEL && event?.action == KeyEvent.ACTION_DOWN && currentEditText.text.isEmpty()) {
-                    previousEditText?.requestFocus()
-                    previousEditText?.setSelection(previousEditText.text.length)
-                    return true
-                }
-                return false
-            }
-        })
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of

@@ -18,14 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/etNewPass"
-        android:inputType="textVisiblePassword"
+        android:minHeight="48dp"
+        android:inputType="textPassword"
         android:hint="@string/newPass"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:id="@+id/etConfirmNewPass"
-        android:inputType="textVisiblePassword"
-
+        android:inputType="textPassword"
         android:hint="@string/confirmNewPass"/>
     <Button
         android:layout_width="wrap_content"
