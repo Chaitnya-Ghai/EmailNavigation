@@ -50,19 +50,19 @@ class FirstFragment : Fragment() {
         binding.btnFrag1.setOnClickListener {
             val regex = Regex("[a-z]@gmail\$")
             val isMatch = regex.containsMatchIn(binding.etFragment.text.toString())
-            if(isMatch){
-                val randomFourDigitNo : Int=(1000..9999).random()
+            if (isMatch) {
+                val randomFourDigitNo: Int = (1000..9999).random()
                 println("$randomFourDigitNo")
                 Log.e(tag, " randomFourDigitNo $randomFourDigitNo")
                 val bundle = Bundle()
                 bundle.putString("email", binding.etFragment.text?.toString())
                 bundle.putString("otp", "$randomFourDigitNo")
-                findNavController().navigate(R.id.action_firstFragment_to_secondFragment,bundle)
-            }
-           else
+                findNavController().navigate(R.id.action_firstFragment_to_secondFragment, bundle)
+            } else {
                 binding.etFragment.error = resources.getString(R.string.enter_your_email)
                 Toast.makeText(requireContext(), "Enter Valid email", Toast.LENGTH_SHORT).show()
             }
+        }
     }
     companion object {
         /**
